@@ -10,7 +10,7 @@ class CSemaphore{
 	std::mutex m_lock;
 	std::condition_variable m_cv;
 public:
-    CSemaphore() { m_count = 0; m_maxCount = 0; }
+    	CSemaphore() { m_count = 0; m_maxCount = 0; }
 	CSemaphore(int cnt , int maxcount ) : m_count(cnt)
 	{
 		if (maxcount < cnt)
