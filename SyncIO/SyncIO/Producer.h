@@ -28,18 +28,18 @@ public:
 		{
 			semWrite.wait();
 			std::unique_lock<std::mutex> guard(mlock);
-            //Simulate to close Writer/Reader Thread after processing MAX 20 records.
-            if (stopCountForProducer >= MAX_RECORDS_TO_PROCESS)
+                        //Simulate to close Writer/Reader Thread after processing MAX 20 records.
+                        if (stopCountForProducer >= MAX_RECORDS_TO_PROCESS)
 			{
-                stopConsumerThread = true;
-                guard.unlock();
+                		stopConsumerThread = true;
+                		guard.unlock();
 				semRead.notify();
 				break;
 			}
-            Buffer[out] = RandomNumber();
-            std::cout << "  <Producer[" << id << "] written> " << Buffer[out] << " at WriteIndex = " << out << "\n";
+            		Buffer[out] = RandomNumber();
+            		std::cout << "  <Producer[" << id << "] written> " << Buffer[out] << " at WriteIndex = " << out << "\n";
 			out = (out + 1) % MAX_LEN;
-            stopCountForProducer++;
+            		stopCountForProducer++;
 			PRINT_BUFF("Producer");
 			std::this_thread::sleep_for(std::chrono::milliseconds(400));
 			semRead.notify();
