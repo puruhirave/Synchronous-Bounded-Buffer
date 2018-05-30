@@ -26,7 +26,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Create producers
 	for (i = 0; i < producers.size(); i++)
 	{
-        std::this_thread::sleep_for(std::chrono::milliseconds(13*i));
+        	std::this_thread::sleep_for(std::chrono::milliseconds(13*i));
 		producers[i].setID(i);
 		producers[i].start();
 	}
@@ -44,7 +44,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		producers[i].JoinToMainThread();
 	}
 
-    std::cout <<std::endl<< " ... Processed all records..." << std::endl;
+    	std::cout <<std::endl<< " ... Processed all records..." << std::endl;
 	std::cin.get();
 	return 0;
 }
