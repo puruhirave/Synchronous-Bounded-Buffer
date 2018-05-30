@@ -34,16 +34,16 @@ public:
 			semRead.wait();
 			std::unique_lock<std::mutex> guard(mlock);
 
-            //Simulation of Consumer thread closing condition.
-            if (semRead.GetCount() <= 0 && stopConsumerThread)
+            		//Simulation of Consumer thread closing condition.
+            		if (semRead.GetCount() <= 0 && stopConsumerThread)
 			{
-                guard.unlock();
+                		guard.unlock();
 				semWrite.notify();
 				break;
 			}
 			
-            data = Buffer[in];
-            Buffer[in] = 0;
+            		data = Buffer[in];
+            		Buffer[in] = 0;
 			std::cout << "-------- <Consumer  [" << id << "] Received> " << data << " at ReadIndex = " << in << "\n";
 			in = (in + 1) % MAX_LEN;
 			//PRINT_BUFF("		Consumer");
