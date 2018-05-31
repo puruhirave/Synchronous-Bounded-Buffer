@@ -3,7 +3,7 @@ Produce Consumer problem solved with Synchronous Bounded Buffer
 
 This code doesn't implement any Producer/Consumer IPC mechanism purposefully. Because the intent of this program is synchronize the Bounded buffer which is used in Producer-Consumer problem without deadlock or race condition. So main focus is on how Bounded buffer can be synchronized?
 
-*In classical Producer-Consumer problem, if consumer wants to read data from shared memory like fixed length resource buffer, the Consumer cannot read data before the data is produced by Producer. And the Producer cannot overwrite data before the data is consumed by Consumer. It requires signaling mechanism for both Consumer and Producer.
+* In classical Producer-Consumer problem, if consumer wants to read data from shared memory like fixed length resource buffer, the Consumer cannot read data before the data is produced by Producer. And the Producer cannot overwrite data before the data is consumed by Consumer. It requires signaling mechanism for both Consumer and Producer.
 Also if multiple Producers writing data and multiple Consumer reading data from shared Buffer then there is always race for data. And also it requires proper ordering of read/write operation.
 This problem can be solved by using two Semaphores one is for Producer with Max length and one for Consumer with Zero length.
 
