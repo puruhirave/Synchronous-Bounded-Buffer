@@ -21,12 +21,12 @@ Mutex mlock; //For mutual exclusive access to shared buffer
 ```C
 Send(data)
 {
-	semWrite.wait(); //Wait for Consumer to read data if Buffer is Full.
+	semWrite.wait(); //Wait on 'semWrite' semaphore for Consumer to read data if Buffer is Full.
 	mlock.lock(); // Wait for mutual exclusive access to buffer
 	//Produce data at Write index and increment index for next write operation   
 	Buffer[in] = data;   
 	in=(in+1)%N;
-	//Unlock Mutex and signal Consumer to read data by semRead.
+	//Unlock Mutex and signal the 'semRead' semaphore for Consumer to read data.
 	Mutex.unlock();
 	semRead.signal();
 }
@@ -36,12 +36,12 @@ Send(data)
 ```C
 Recieve(data)
 {
-	semRead.wait(); //Wait for Producer to write data if Buffer is Empty.
+	semRead.wait(); //Wait on 'semWrite' semaphore for Producer to write data if Buffer is Empty.
 	mlock.lock(); // Wait for mutual exclusive access to buffer
 	//Consume data at Read index and increment index for next read operation   
 	data = Buffer[out] =;   
 	out=(out+1)%N;
-	//Unlock Mutex and signal Producer to write data by semWrite.
+	//Unlock Mutex and signal the 'semWrite' semaphore for Producer to write data.
 	Mutex.unlock();
 	semWrite.signal();
 }
