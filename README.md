@@ -7,12 +7,14 @@ This code doesn't implement any Producer/Consumer IPC mechanism purposefully. Be
 Also if multiple Producers writing data and multiple Consumer reading data from shared Buffer then there is always race for data. And also it requires proper ordering of read/write operation.
 This problem can be solved by using two Semaphores one is for Producer with Max length and one for Consumer with Zero length.
 
-*Shared resources
+##Shared resources
+```C
 Buffer[N];  //Max. N resources.
 semWrite(N);
 semRead(0);
 in=0, out=0; //Write index and Read index.
 Mutex mlock; //For mutual exclusive access to shared buffer
+```
 
 ## Producer:
 ```C
@@ -28,6 +30,7 @@ Send(data)
 	semRead.signal();
 }
 ```
+
 ## Consumer:
 ```C
 Recieve(data)
