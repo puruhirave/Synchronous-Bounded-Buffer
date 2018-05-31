@@ -23,11 +23,9 @@ Write(data)
 {
 	semWrite.wait(); //Wait on 'semWrite' semaphore for Consumer to read data if Buffer is Full.
 	mlock.lock(); // Wait for mutual exclusive access to buffer
-	//Produce data at Write index and increment index for next write operation   
-	Buffer[in] = data;   
+	Buffer[in] = data;   //Produce data at Write index and increment index for next write operation   
 	in=(in+1)%N;
-	//Unlock Mutex and signal the 'semRead' semaphore for Consumer to read data.
-	Mutex.unlock();
+	Mutex.unlock();  //Unlock Mutex and signal the 'semRead' semaphore for Consumer to read data.
 	semRead.signal();
 }
 ```
