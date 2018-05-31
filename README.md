@@ -34,13 +34,18 @@ Write(data)
 ```C
 Read(data)
 {
-	semRead.wait(); //Wait on 'semWrite' semaphore for Producer to write data if Buffer is Empty.
-	mlock.lock(); // Wait for mutual exclusive access to buffer
-	//Consume data at Read index and increment index for next read operation   
-	data = Buffer[out] =;   
+	//Wait on 'semWrite' semaphore for Producer to write data if Buffer is Empty.
+	semRead.wait(); 
+	
+	// Wait for mutual exclusive access to buffer
+	mlock.lock(); 
+	
+	//Consume data at Read index and increment index for next read operation  
+	data = Buffer[out] =;    
 	out=(out+1)%N;
+	
 	//Unlock Mutex and signal the 'semWrite' semaphore for Producer to write data.
-	Mutex.unlock();
+	Mutex.unlock();   
 	semWrite.signal();
 }
 ```
