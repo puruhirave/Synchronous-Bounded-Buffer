@@ -14,7 +14,8 @@ semRead(0);
 in=0, out=0; //Write index and Read index.
 Mutex mlock; //For mutual exclusive access to shared buffer
 
-# Producer:
+## Producer:
+```C
 Send(data)
 {
 	semWrite.wait(); //Wait for Consumer to read data if Buffer is Full.
@@ -26,9 +27,9 @@ Send(data)
 	Mutex.unlock();
 	semRead.signal();
 }
-
-# Consumer:
-
+```
+## Consumer:
+```C
 Recieve(data)
 {
 	semRead.wait(); //Wait for Producer to write data if Buffer is Empty.
@@ -40,3 +41,4 @@ Recieve(data)
 	Mutex.unlock();
 	semWrite.signal();
 }
+```
