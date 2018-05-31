@@ -37,8 +37,8 @@ class Producer{
 				break;
 			}
             		Buffer[out] = RandomNumber();
-            		std::cout << "  <Producer[" << id << "] written> " << Buffer[out] << " at WriteIndex = " << out << "\n";
-			out = (out + 1) % MAX_LEN;
+            		std::cout << "  <Producer[" << id << "] written> " << Buffer[in] << " at WriteIndex = " << in << "\n";
+			in = (in + 1) % MAX_LEN;
             		stopCountForProducer++;
 			PRINT_BUFF("Producer");
 			std::this_thread::sleep_for(std::chrono::milliseconds(400));
