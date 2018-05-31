@@ -8,7 +8,7 @@ class Consumer{
 
 	std::thread consumer_thread;
 	int m_id;
-public:
+    public:
 	Consumer() : m_id(0) {}
 	Consumer(int id) : m_id(id){}
 	~Consumer(){}
@@ -43,9 +43,9 @@ public:
 			}
 			
             		data = Buffer[in];
-            		Buffer[in] = 0;
-			std::cout << "-------- <Consumer  [" << id << "] Received> " << data << " at ReadIndex = " << in << "\n";
-			in = (in + 1) % MAX_LEN;
+            		Buffer[out] = 0;
+			std::cout << "-------- <Consumer  [" << id << "] Received> " << data << " at ReadIndex = " << out << "\n";
+			out = (out + 1) % MAX_LEN;
 			//PRINT_BUFF("		Consumer");
 			semWrite.notify();
 			std::this_thread::sleep_for(std::chrono::milliseconds(400));
