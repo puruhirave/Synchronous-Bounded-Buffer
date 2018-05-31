@@ -7,7 +7,7 @@
 class Producer{
 	std::thread producer_thread;
 	int m_id;
-public:
+    public:
 	Producer() : m_id(0){}
 	Producer(int id):m_id(id){}
 	~Producer(){}
@@ -45,6 +45,5 @@ public:
 			semRead.notify();
 			guard.unlock();
 		}
-
 	}
 };
