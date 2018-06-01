@@ -10,10 +10,10 @@ This problem can be solved by using 2 Semaphores. One is for Producer with Max l
 
 ## Shared resources
 ```C
-Buffer[N];  //Max. N resources.
+int Buffer[N];  //Max. N resources.
 semWrite(N);
 semRead(0);
-in=0, out=0; //Write index and Read index.
+int in=0, out=0; //Write index and Read index.
 Mutex mlock; //For mutual exclusive access to shared buffer
 ```
 
@@ -48,7 +48,7 @@ Read(data)
 	mlock.lock(); 
 	
 	//Consume data at Read index and increment index for next read operation  
-	data = Buffer[out] =;    
+	data = Buffer[out];    
 	out=(out+1)%N;
 	
 	//Unlock Mutex and signal the 'semWrite' semaphore for Producer to write data.
