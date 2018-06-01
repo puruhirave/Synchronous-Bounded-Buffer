@@ -24,7 +24,7 @@ Write(int data)
 	//Wait on 'semWrite' semaphore for Consumer to read data if Buffer is Full.
 	semWrite.wait(); 
 	
-	// Wait for mutual exclusive access to buffer
+	// Get mutual exclusive access to buffer
 	mlock.lock(); 
 	
 	//Produce data at Write index and increment index for next write operation
@@ -44,7 +44,7 @@ Read(int & readData)
 	//Wait on 'semWrite' semaphore for Producer to write data if Buffer is Empty.
 	semRead.wait(); 
 	
-	// Wait for mutual exclusive access to buffer
+	// Get mutual exclusive access to buffer
 	mlock.lock(); 
 	
 	//Consume data at Read index and increment index for next read operation  
