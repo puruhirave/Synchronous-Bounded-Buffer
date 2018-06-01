@@ -19,7 +19,7 @@ Mutex mlock; //For mutual exclusive access to shared buffer
 
 ## Producer:
 ```C
-Write(data)
+Write(int data)
 {
 	//Wait on 'semWrite' semaphore for Consumer to read data if Buffer is Full.
 	semWrite.wait(); 
@@ -39,7 +39,7 @@ Write(data)
 
 ## Consumer:
 ```C
-Read(data)
+Read(int & readData)
 {
 	//Wait on 'semWrite' semaphore for Producer to write data if Buffer is Empty.
 	semRead.wait(); 
@@ -48,7 +48,7 @@ Read(data)
 	mlock.lock(); 
 	
 	//Consume data at Read index and increment index for next read operation  
-	data = Buffer[out];    
+	readData = Buffer[out];    
 	out=(out+1)%N;
 	
 	//Unlock Mutex and signal the 'semWrite' semaphore for Producer to write data.
