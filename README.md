@@ -11,8 +11,8 @@ This problem can be solved by using 2 Semaphores. One is for Producer with Max l
 ## Shared resources
 ```C
 int Buffer[N];  //Max. N resources.
-semWrite(N);
-semRead(0);
+CSemaphore semWrite(N);
+CSemaphore semRead(0);
 int in=0, out=0; //Write index and Read index.
 Mutex mlock; //For mutual exclusive access to shared buffer
 ```
