@@ -42,7 +42,7 @@ class Consumer{
 				break;
 			}
 			
-            		data = Buffer[in];
+            		data = Buffer[out];
             		Buffer[out] = 0;
 			std::cout << "-------- <Consumer  [" << id << "] Received> " << data << " at ReadIndex = " << out << "\n";
 			out = (out + 1) % MAX_LEN;
