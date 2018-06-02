@@ -3,8 +3,8 @@ Produce Consumer problem solved with Synchronous Bounded Buffer
 
 The intent of this program is to synchronize the Bounded buffer which is used in Producer-Consumer problem to avoid deadlock and race condition. So main focus is on how Bounded buffer can be synchronized? This code simulates Producer/Consumer and Shared memory purposefully instead of calling process creation calls like fork() or Shared memory creating system calls.
 
-* In classical Producer-Consumer problem, if consumer wants to read data from shared memory like fixed length resource buffer, the Consumer cannot read data before the data is produced by Producer. And the Producer cannot overwrite data before the data is consumed by Consumer. It requires signaling mechanism for both Consumer and Producer.
-* Also if multiple Producers writing data and multiple Consumer reading data from shared Buffer then there is always race for data. And also it requires proper ordering of read/write operation.
+* In classical Producer-Consumer problem, if consumer wants to read data from shared memory like fixed length resource buffer, the Consumer cannot read data before the data is produced by Producer. And same way the Producer cannot overwrite data before the data is consumed by Consumer. It requires signaling mechanism for both Consumer and Producer.
+* Also if multiple Producers writing data and multiple Consumers reading data from shared Buffer then there is always race for data. And also it requires proper ordering of read/write operation.
 
 This problem can be solved by using 2 Semaphores. One is for Producer with Max length and one for Consumer with Zero length.
 
