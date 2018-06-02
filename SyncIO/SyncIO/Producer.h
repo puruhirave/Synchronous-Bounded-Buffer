@@ -36,7 +36,7 @@ class Producer{
 				semRead.notify();
 				break;
 			}
-            		Buffer[out] = RandomNumber();
+            		Buffer[in] = RandomNumber();
             		std::cout << "  <Producer[" << id << "] written> " << Buffer[in] << " at WriteIndex = " << in << "\n";
 			in = (in + 1) % MAX_LEN;
             		stopCountForProducer++;
