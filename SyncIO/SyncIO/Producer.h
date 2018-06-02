@@ -45,5 +45,8 @@ class Producer{
 			semRead.notify();
 			guard.unlock();
 		}
+		
+		stopConsumerThread = true;
+		semRead.notify();
 	}
 };
