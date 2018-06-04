@@ -46,7 +46,7 @@ class Producer{
 			guard.unlock();
 		}
 		
-             	//Gracefull shutdown by notifying Consumer if any data pending to read in Buffer.
+             	//Gracefull shutdown by notifying Consumer if any data is pending to read in Buffer.
         	semEmpty.notify();
 	}
 };
