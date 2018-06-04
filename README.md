@@ -11,8 +11,8 @@ This problem can be solved by using 2 Semaphores. One is for Producer with Max l
 ## Shared resources
 ```C
 int Buffer[N];  //Max. N resources.
-CSemaphore semWrite(N);
-CSemaphore semRead(0);
+CSemaphore semEmpty(N);
+CSemaphore semFull(0);
 int in=0, out=0; //Write index and Read index.
 Mutex mlock; //For mutual exclusive access to shared buffer
 ```
@@ -21,8 +21,8 @@ Mutex mlock; //For mutual exclusive access to shared buffer
 ```C
 Write(int data)
 {
-	//Wait on 'semWrite' semaphore for Consumer to read data if Buffer is Full.
-	semWrite.wait(); 
+	//Wait on 'semFull' semaphore for Consumer to read data if Buffer is Full.
+	semFull.wait(); 
 	
 	// Get mutual exclusive access to buffer
 	mlock.lock(); 
@@ -33,7 +33,7 @@ Write(int data)
 	
 	//Unlock Mutex and signal the 'semRead' semaphore for Consumer to read data.
 	Mutex.unlock();  
-	semRead.signal();
+	semEmpty.signal();
 }
 ```
 
@@ -41,8 +41,8 @@ Write(int data)
 ```C
 Read(int & readData)
 {
-	//Wait on 'semWrite' semaphore for Producer to write data if Buffer is Empty.
-	semRead.wait(); 
+	//Wait on 'semEmpty' semaphore for Producer to write data if Buffer is Empty.
+	semEmpty.wait(); 
 	
 	// Get mutual exclusive access to buffer
 	mlock.lock(); 
@@ -53,7 +53,7 @@ Read(int & readData)
 	
 	//Unlock Mutex and signal the 'semWrite' semaphore for Producer to write data.
 	Mutex.unlock();   
-	semWrite.signal();
+	semFull.signal();
 }
 ```
 
