@@ -26,14 +26,14 @@ class Producer{
 	{
 		while (1)
 		{
-			semWrite.wait();
+			semFull.wait();
 			std::unique_lock<std::mutex> guard(mlock);
                         //Simulate to close Writer/Reader Thread after processing MAX 20 records.
                         if (stopCountForProducer >= MAX_RECORDS_TO_PROCESS)
 			{
                 		stopConsumerThread = true;
                 		guard.unlock();
-				semRead.notify();
+				semEmpty.notify();
 				break;
 			}
             		Buffer[in] = RandomNumber();
@@ -42,11 +42,11 @@ class Producer{
             		stopCountForProducer++;
 			PRINT_BUFF("Producer");
 			std::this_thread::sleep_for(std::chrono::milliseconds(400));
-			semRead.notify();
+			semEmpty.notify();
 			guard.unlock();
 		}
 		
 		stopConsumerThread = true;
-		semRead.notify();
+		semEmpty.notify();
 	}
 };
