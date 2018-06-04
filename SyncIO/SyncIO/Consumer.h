@@ -31,14 +31,14 @@ class Consumer{
 
 		while (1)
 		{
-			semRead.wait();
+			semEmpty.wait();
 			std::unique_lock<std::mutex> guard(mlock);
 
             		//Simulation of Consumer thread closing condition.
-            		if (semRead.GetCount() <= 0 && stopConsumerThread)
+            		if (semEmpty.GetCount() <= 0 && stopConsumerThread)
 			{
                 		guard.unlock();
-				semWrite.notify();
+				semFull.notify();
 				break;
 			}
 			
@@ -47,7 +47,7 @@ class Consumer{
 			std::cout << "-------- <Consumer  [" << id << "] Received> " << data << " at ReadIndex = " << out << "\n";
 			out = (out + 1) % MAX_LEN;
 			//PRINT_BUFF("		Consumer");
-			semWrite.notify();
+			semFull.notify();
 			std::this_thread::sleep_for(std::chrono::milliseconds(400));
 			guard.unlock();
 		}
