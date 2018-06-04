@@ -46,7 +46,7 @@ class Producer{
 			guard.unlock();
 		}
 		
-		stopConsumerThread = true;
-		semEmpty.notify();
+             	//Gracefull shutdown by checking if any data pending to read for Consumer.
+        	semEmpty.notify();
 	}
 };
