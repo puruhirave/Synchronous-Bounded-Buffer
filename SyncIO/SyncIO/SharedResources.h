@@ -11,8 +11,8 @@ bool ProducerDone = false;
 int stopCountForProducer = 0;
 bool stopConsumerThread = false;
 
-CSemaphore semRead(0, MAX_LEN); //Full
-CSemaphore semWrite(MAX_LEN, MAX_LEN);
+CSemaphore semEmpty(0, MAX_LEN); 
+CSemaphore semFull(MAX_LEN, MAX_LEN); //Full
 std::mutex mlock;
 
 
