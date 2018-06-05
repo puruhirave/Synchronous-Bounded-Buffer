@@ -57,7 +57,7 @@ Read(int & readData)
 }
 ```
 
-In this program used maximum 20 records to be processed by 4 different Producers and Consumers. See the screen shot of executable below,
+For better understanding, maximum 20 records are used to be processed by 4 different Producers and Consumers. See the screen shot of executable below,
 
 ![boundebufferoutput](https://user-images.githubusercontent.com/6056609/40879947-3a35ba78-66c6-11e8-80fa-958867de0fdc.png)
 
