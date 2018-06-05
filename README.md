@@ -19,7 +19,7 @@ Mutex mlock; //For mutual exclusive access to shared buffer
 ```
 
 ## Producer:
-Consider there are multiple Producers writting in to the Buffer one at a time. Each one is waiting on 'semFull' semaphore which is initialized with N free positions. Initially the wait() call executed untill available free positions because it will decrement resource count by one. And then acquire lock, write data in current free position, increment write index and finally signal to 'semEmpty' semaphore on which Consumers are waiting to read available data from the Buffer.
+Consider there are multiple Producers writting in to the Buffer one at a time. Each one is waiting on 'semFull' semaphore which is initialized with N free positions. Initially the wait() call executed untill available free positions because it will decrement resource count by one. And then acquire lock, write data in current free position, increment write index and finally signal to 'semEmpty' semaphore on which Consumers are waiting for data to be read from the Buffer.
 
 ```C
 Producer
