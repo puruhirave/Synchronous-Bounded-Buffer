@@ -19,7 +19,8 @@ Mutex mlock; //For mutual exclusive access to shared buffer
 ```
 
 ## Producer:
-Consider there are multiple Producers writting in to the Buffer one at a time.
+Consider there are multiple Producers writting in to the Buffer one at a time. Each one is waiting on 'semFull' semaphore which is initialized with N free positions. Initially the wait() call executed untill available free positions because it will decrement resource count by one. And then acquire lock, write data in current free position, increment write index and finally signal to  'semEmpty' semaphore on which Consumers are waiting for data to be written into the Buffer.
+
 ```C
 Producer
 {
@@ -44,6 +45,7 @@ Producer
 ```
 
 ## Consumer:
+Once data is written by Producer and signalled by 'SempEmpty'. One of the waiting Consumer will get chance and 'semEmpty.wait()' executed which reduces 
 ```C
 Consumer
 {
