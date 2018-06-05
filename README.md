@@ -7,6 +7,7 @@ The intent of this program is to synchronize the Bounded buffer which is used in
 * Also if multiple Producers writing data and multiple Consumers reading data from shared Buffer then there is always race for data. And also it requires proper ordering of read/write operation.
 
 This problem can be solved by using 2 Semaphores. One is for Producer with Max length and one for Consumer with Zero length.
+Following is the psudo code of important parts of this program.
 
 ## Shared resources
 ```C
@@ -18,42 +19,51 @@ Mutex mlock; //For mutual exclusive access to shared buffer
 ```
 
 ## Producer:
+Consider there are multiple Producers writting in to the Buffer one at a time.
 ```C
-Write(int data)
+Producer
 {
-	//Wait on 'semFull' semaphore for Consumer to read data if Buffer is Full.
-	semFull.wait(); 
+	//Each Producer writes data in tight loop.
+    	Write(int data)
+    	{
+		//Wait on 'semFull' semaphore for Consumer to read data if Buffer is Full.
+		semFull.wait(); 
 	
-	// Get mutual exclusive access to buffer
-	mlock.lock(); 
+		// Get mutual exclusive access to buffer
+		mlock.lock(); 
 	
-	//Produce data at Write index and increment index for next write operation
-	Buffer[in] = data;      
-	in=(in+1)%N;
+		//Produce data at Write index and increment index for next write operation
+		Buffer[in] = data;      
+		in=(in+1)%N;
 	
-	//Unlock Mutex and signal the 'semRead' semaphore for Consumer to read data.
-	Mutex.unlock();  
-	semEmpty.signal();
-}
+		//Unlock Mutex and signal the 'semRead' semaphore for Consumer to read data.
+		Mutex.unlock();  
+		semEmpty.signal();
+    	}
+}	
 ```
 
 ## Consumer:
 ```C
-Read(int & readData)
+Consumer
 {
-	//Wait on 'semEmpty' semaphore for Producer to write data if Buffer is Empty.
-	semEmpty.wait(); 
-	
-	// Get mutual exclusive access to buffer
-	mlock.lock(); 
-	
-	//Consume data at Read index and increment index for next read operation  
-	readData = Buffer[out];    
-	out=(out+1)%N;
-	
-	//Unlock Mutex and signal the 'semWrite' semaphore for Producer to write data.
-	Mutex.unlock();   
-	semFull.signal();
+	//Each Consumer reads data from Buffer in tight loop.
+	Read(int & readData)
+	{
+		//Wait on 'semEmpty' semaphore for Producer to write data if Buffer is Empty.
+		semEmpty.wait(); 
+
+		// Get mutual exclusive access to buffer
+		mlock.lock(); 
+
+		//Consume data at Read index and increment index for next read operation  
+		readData = Buffer[out];    
+		out=(out+1)%N;
+
+		//Unlock Mutex and signal the 'semWrite' semaphore for Producer to write data.
+		Mutex.unlock();   
+		semFull.signal();
+	}
 }
 ```
 
