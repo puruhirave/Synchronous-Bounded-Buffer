@@ -6,8 +6,6 @@ static const int MAX_RECORDS_TO_PROCESS = 20;
 //Shared Resources
 int Buffer[MAX_LEN];
 int in = 0, out = 0;
-bool ConsumerDone = false;
-bool ProducerDone = false;
 int stopCountForProducer = 0;
 bool stopConsumerThread = false;
 
