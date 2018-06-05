@@ -1,7 +1,7 @@
 # Simulation of Synchronous-Bounded-Buffer
 Produce Consumer problem solved with Synchronous Bounded Buffer
 
-The intent of this program is to synchronize the Bounded buffer which is used in Producer-Consumer problem to avoid deadlock and race condition. So main focus is on how Bounded buffer can be synchronized? This code does not covers real Producer/Consumer process creation part like fork() or Shared memory creating system calls purposefuly.
+The intent of this program is to synchronize the Bounded buffer which is used in Producer-Consumer problem to avoid possible deadlock and race condition. So main focus is on how Bounded buffer can be synchronized? This code does not covers real Producer/Consumer process creation part like fork() or Shared memory creating system calls purposefuly.
 
 * In classical Producer-Consumer problem, if consumer wants to read data from shared memory like fixed length resource buffer, the Consumer cannot read data before the data is produced by Producer. And same way the Producer cannot overwrite data before the data is consumed by Consumer. It requires signaling mechanism for both Consumer and Producer.
 * Also if multiple Producers writing data and multiple Consumers reading data from shared Buffer then there is always race for data. And also it requires proper ordering of read/write operation.
@@ -19,7 +19,7 @@ Mutex mlock; //For mutual exclusive access to shared buffer
 ```
 
 ## Producer:
-Consider there are multiple Producers writting in to the Buffer one at a time. Each one is waiting on 'semFull' semaphore which is initialized with N free positions. Initially the wait() call executed untill available free positions because it will decrement resource count by one. And then acquire lock, write data in current free position, increment write index and finally signal to 'semEmpty' semaphore on which Consumers are waiting for data to be written into the Buffer.
+Consider there are multiple Producers writting in to the Buffer one at a time. Each one is waiting on 'semFull' semaphore which is initialized with N free positions. Initially the wait() call executed untill available free positions because it will decrement resource count by one. And then acquire lock, write data in current free position, increment write index and finally signal to 'semEmpty' semaphore on which Consumers are waiting to read available data from the Buffer.
 
 ```C
 Producer
@@ -45,7 +45,7 @@ Producer
 ```
 
 ## Consumer:
-Initially Consumer is waiting on 'SempEmpty' semaphore because it is initialized with Zero i.e. initially Buffer is empty. Once data is written by Producer and signalled by 'SempEmpty' semaphore which in turn increment available resource count. Then one of the waiting Consumer will get chance and 'semEmpty.wait()' executed which reduces resource count by one. And acquire lock, read data, increment read index and finally call 'semFull.signal()' to signal one waiting Producer that one position is free now to overwrite data.
+Initially Consumers are waiting on 'SempEmpty' semaphore because it is initialized with Zero i.e. initially Buffer is empty. Once data is written by Producer and signalled by 'SempEmpty.signal()' call, which in turn increment available resource count. Then one of the waiting Consumer will get chance and 'semEmpty.wait()' executed which reduces resource count by one. And then acquire lock, read data, increment read index and finally call 'semFull.signal()' to signal one of the waiting Producer indicating that one position is free now to overwrite the data into Buffer.
 
 ```C
 Consumer
