@@ -12,14 +12,14 @@ Following is the psudo code of important parts of this program.
 ## Shared resources
 ```C
 int Buffer[N];  //Max. N resources.
-CSemaphore semEmpty(N);
-CSemaphore semFull(0);
+CSemaphore semEmpty(0);
+CSemaphore semFull(N);
 int in=0, out=0; //Write index and Read index.
 Mutex mlock; //For mutual exclusive access to shared buffer
 ```
 
 ## Producer:
-Consider there are multiple Producers writting in to the Buffer one at a time. Each one is waiting on 'semFull' semaphore which is initialized with N free positions. Initially the wait() call executed untill available free positions because it will decrement resource count by one. And then acquire lock, write data in current free position, increment write index and finally signal to  'semEmpty' semaphore on which Consumers are waiting for data to be written into the Buffer.
+Consider there are multiple Producers writting in to the Buffer one at a time. Each one is waiting on 'semFull' semaphore which is initialized with N free positions. Initially the wait() call executed untill available free positions because it will decrement resource count by one. And then acquire lock, write data in current free position, increment write index and finally signal to 'semEmpty' semaphore on which Consumers are waiting for data to be written into the Buffer.
 
 ```C
 Producer
@@ -45,7 +45,8 @@ Producer
 ```
 
 ## Consumer:
-Once data is written by Producer and signalled by 'SempEmpty'. One of the waiting Consumer will get chance and 'semEmpty.wait()' executed which reduces 
+Initially Consumer is waiting on 'SempEmpty' semaphore because it is initialized with Zero i.e. initially Buffer is empty. Once data is written by Producer and signalled by 'SempEmpty' semaphore which in turn increment available resource count. Then one of the waiting Consumer will get chance and 'semEmpty.wait()' executed which reduces resource count by one. And acquire lock, read data, increment read index and finally call 'semFull.signal()' to signal one waiting Producer that one position is free now to overwrite data.
+
 ```C
 Consumer
 {
