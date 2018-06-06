@@ -19,7 +19,7 @@ Mutex mlock; //For mutual exclusive access to shared buffer
 ```
 
 ## Producer:
-Consider there are multiple Producers writting in to the Buffer one at a time. Each one is waiting on 'semFull' semaphore which is initialized with N free positions. Initially the wait() call executed untill available free positions because it will decrement resource count by one. And then acquire lock, write data in current free position, increment write index and finally signal to 'semEmpty' semaphore on which Consumers are waiting for data to be read from the Buffer.
+Consider there are multiple Producers writting in to the Buffer one at a time. Each one is waiting on 'semFull' semaphore which is initialized with N free positions. Initially the wait() call executed and it will decrement resource count by one, untill free positions available into the Buffer. And then acquire lock, write data in current free position, increment write index and finally signal to 'semEmpty' semaphore on which Consumers are waiting for data to be read from the Buffer.
 
 ```C
 Producer
@@ -35,7 +35,7 @@ Producer
 	
 		//Produce data at Write index and increment index for next write operation
 		Buffer[in] = data;      
-		in=(in+1)%N;
+		in = (in + 1) % N;
 	
 		//Unlock Mutex and signal the 'semRead' semaphore for Consumer to read data.
 		Mutex.unlock();  
@@ -45,7 +45,7 @@ Producer
 ```
 
 ## Consumer:
-Initially Consumers are waiting on 'SempEmpty' semaphore because it is initialized with Zero i.e. initially Buffer is empty. Once data is written by Producer and signalled by 'SempEmpty.signal()' call, which in turn increment available resource count. Then one of the waiting Consumer will get chance and 'semEmpty.wait()' executed which reduces resource count by one. And then acquire lock, read data, increment read index and finally call 'semFull.signal()' to signal one of the waiting Producer indicating that one position is free now to overwrite the data into Buffer.
+Initially Consumers are waiting on 'SempEmpty' semaphore because it is initialized with Zero resources i.e. initially Buffer is empty. Once data is written by Producer and signalled by 'SempEmpty.signal()' call, which in turn increment available resource count. Then one of the waiting Consumer will get chance and 'semEmpty.wait()' executed which reduces resource count by one. And then acquire lock, read data, increment read index and finally call 'semFull.signal()' to signal one of the waiting Producer indicating that one position is free now to overwrite the data into Buffer.
 
 ```C
 Consumer
@@ -61,7 +61,7 @@ Consumer
 
 		//Consume data at Read index and increment index for next read operation  
 		readData = Buffer[out];    
-		out=(out+1)%N;
+		out = (out + 1) % N;
 
 		//Unlock Mutex and signal the 'semWrite' semaphore for Producer to write data.
 		Mutex.unlock();   
