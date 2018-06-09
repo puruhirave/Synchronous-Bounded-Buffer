@@ -1,5 +1,5 @@
 # Simulation of Synchronous-Bounded-Buffer
-Produce Consumer problem solved with Synchronous Bounded Buffer
+Implementation of Synchronous Bounded Buffer used in Produce Consumer problem. 
 
 The intent of this program is to synchronize the Bounded buffer which is used in Producer-Consumer problem to avoid possible deadlock and race condition. So main focus is on how Bounded buffer can be synchronized? This code does not covers real Producer/Consumer process creation part like fork() or Shared memory creating system calls purposefuly.
 
