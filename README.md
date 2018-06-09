@@ -69,6 +69,7 @@ Consumer
 	}
 }
 ```
+Following screen shot visualize the working of this program.
 
 ![buffer](https://user-images.githubusercontent.com/6056609/41194295-e5030468-6c36-11e8-8da9-0f496e290efc.png)
 
