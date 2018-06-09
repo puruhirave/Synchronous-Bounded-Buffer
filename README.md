@@ -70,6 +70,8 @@ Consumer
 }
 ```
 
+![buffer](https://user-images.githubusercontent.com/6056609/41194267-6b0ea540-6c36-11e8-889a-6a8c0e677568.png)
+
 For better understanding, maximum 20 records are used to be processed by 4 different Producers and Consumers. See the screen shot of executable below,
 
 ![boundebufferoutput](https://user-images.githubusercontent.com/6056609/40879947-3a35ba78-66c6-11e8-80fa-958867de0fdc.png)
