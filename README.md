@@ -8,6 +8,7 @@ The intent of this program is to synchronize the Bounded buffer which is used in
 
 This problem can be solved by using 2 Semaphores. One is for Producer with Max length and one for Consumer with Zero length. 
 Also each Producer/Consumer is running on seperate thread.
+
 Following is the psudo code of important parts of this program.
 
 ## Shared resources
