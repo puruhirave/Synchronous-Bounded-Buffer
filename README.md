@@ -6,7 +6,7 @@ The intent of this program is to synchronize the Bounded buffer which is used in
 * In classical Producer-Consumer problem, if consumer wants to read data from shared memory like fixed length resource buffer, the Consumer cannot read data before the data is produced by Producer. And same way the Producer cannot overwrite data before the data is consumed by Consumer. It requires signaling mechanism for both Consumer and Producer to complete there operation.
 * Also if multiple Producers writing data and multiple Consumers reading data from shared Buffer then there is always race for data. And also it requires proper ordering of read/write operation.
 
-This problem can be solved by using 2 Semaphores. One is for Producer with Max length and one for Consumer with Zero length. Current implementation includes C++11 supported features like std::thread or std::mutex, however semaphore is not proveded by standard library, so new class CSemaphore is created using mutex and condition_variable. Also each Producer/Consumer is running on seperate thread.
+This problem can be solved by using 2 Semaphores. One is for Producer with Max length and one for Consumer with Zero length. Current implementation includes C++11 supported features like std::thread and std::mutex, however semaphore is not proveded by standard library, so new class CSemaphore is created using std::mutex and std::condition_variable. Also each Producer/Consumer is simulated to run on seperate thread.
 
 Following is the psudo code of important parts of this program.
 
